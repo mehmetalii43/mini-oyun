@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Taş Kağıt Makas Oyunu</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6b73ff, #000dff);
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+            font-size: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .choices button {
+            background: #ffffff22;
+            border: 2px solid white;
+            border-radius: 10px;
+            color: white;
+            font-size: 24px;
+            padding: 15px 30px;
+            margin: 10px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .choices button:hover {
+            background: #ffffff55;
+            transform: scale(1.1);
+        }
+
+        #result {
+            margin-top: 50px;
+            font-size: 1.8rem;
+            min-height: 80px;
+            text-shadow: 1px 1px 2px black;
+        }
+
+        .scoreboard {
+            margin-top: 40px;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+        }
+
+        .scoreboard div {
+            background: #ffffff22;
+            padding: 10px 30px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #00000066;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Taş Kağıt Makas</h1>
+
+    <div class="choices">
+        <button onclick="play('taş')">🪨 Taş</button>
+        <button onclick="play('kağıt')">📄 Kağıt</button>
+        <button onclick="play('makas')">✂️ Makas</button>
+    </div>
+
+    <div id="result"></div>
+
+    <div class="scoreboard">
+        <div>Senin Skorun: <span id="user-score">0</span></div>
+        <div>Bilgisayar Skoru: <span id="computer-score">0</span></div>
+    </div>
+
+    <script>
+        let userScore = 0;
+        let computerScore = 0;
+
+        function play(userChoice) {
+            const choices = ['taş', 'kağıt', 'makas'];
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+            let result = '';
+
+            if (userChoice === computerChoice) {
+                result = `Berabere! Bilgisayar da ${computerChoice} seçti.`;
+            } else if (
+                (userChoice === 'taş' && computerChoice === 'makas') ||
+                (userChoice === 'kağıt' && computerChoice === 'taş') ||
+                (userChoice === 'makas' && computerChoice === 'kağıt')
+            ) {
+                userScore++;
+                result = `Tebrikler! Sen ${userChoice}, bilgisayar ${computerChoice} seçti ve kazandın! 🎉`;
+            } else {
+                computerScore++;
+                result = `Üzgünüm, sen ${userChoice}, bilgisayar ${computerChoice} seçti ve kaybettin. 😞`;
+            }
+
+            document.getElementById('result').textContent = result;
+            document.getElementById('user-score').textContent = userScore;
+            document.getElementById('computer-score').textContent = computerScore;
+        }
+    </script>
+
+</body>
+
+</html>
